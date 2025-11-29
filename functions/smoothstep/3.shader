@@ -5,9 +5,15 @@ void main() {
     vec2 st = gl_FragCoord.xy / iResolution.xy;
     vec2 mouse = iMouse.xy / iResolution.xy;
 
-    float p = mouse.x / 2.;
+    float half_horizontal_percentage = mouse.x / 2.;
+    float inverse = 1.0 - half_horizontal_percentage;
 
-    vec4 step = smoothstep(p, 1. - p, vec4(st, 0, 1));
+    vec4 original = vec4(st, 0, 1);
+    vec4 new = smoothstep(
+        half_horizontal_percentage, 
+        inverse, 
+        original
+    );
 
-    gl_FragColor = step;
+    gl_FragColor = new;
 }
